@@ -389,6 +389,33 @@ DefineDevice[19] = { // untested
         ]
 };
 
+DefineDevice[22] = { // untested
+    info: {},
+    model: "zhimi.fan.za5",// https://miot-spec.org/miot-spec-v2/instance?type=urn:miot-spec-v2:device:fan:0000A005:zhimi-za5:2  
+    description: "Smartmi Fan 3",
+    setter: {
+        "power": async function (obj, val) { await device[obj].setPower(val) },
+        "angle": async function (obj, val) { await device[obj].setSwingAngle(val) },
+        "angle_enable": async function (obj, val) { await device[obj].setSwing(val) },
+        "natural_level": async function (obj, val) { await device[obj].setSpeedLevel(val) },
+        "buzzer": async function (obj, val) { await device[obj].setBuzzer(val ? 'on' : 'off') },
+        "child_lock": async function (obj, val) { await device[obj].setChildLock(val ? 'on' : 'off') },
+        "led_b": async function (obj, val) { await device[obj].setLcdBrightness(val) },
+        "speed_level": async function (obj, val) { await device[obj].setFanLevel(val) },
+        "poweroff_time": async function (obj, val) { await device[obj].setTimer(val) }
+    },
+    common:
+        [{ name: "power", type: "boolean", role: "switch", read: true, write: true },
+        { name: "angle", type: "number", read: true, write: true, min: 1, max: 120 },
+        { name: "angle_enable", type: "boolean", role: "switch", read: true, write: true },
+        { name: "natural_level", type: "number", read: true, write: true, min: 0, max: 1, states: { 0: "Straight Wind", 1: "Natural Wind" } },
+        { name: "buzzer", type: "boolean", role: "switch", read: true, write: true },
+        { name: "child_lock", type: "boolean", role: "switch", read: true, write: true },
+        { name: "led_b", type: "boolean", role: "switch", read: true, write: true },
+        { name: "speed_level", type: "number", read: true, write: true, min: 1, max: 4 },
+        { name: "poweroff_time", type: "number", read: true, write: true, min: 0, max: 540, unit: "m" }]
+};
+
 // ***************************** Lights *********************************
 
 DefineDevice[2] = { // Tested and ok except setting color
